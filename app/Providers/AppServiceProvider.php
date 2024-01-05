@@ -3,6 +3,9 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use GuzzleHttp\Client;
+use App\Services\RedditService;
+
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -13,7 +16,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->singleton(RedditService::class, function ($app) {
+            return new RedditService(new Client());
+        });
     }
 
     /**
