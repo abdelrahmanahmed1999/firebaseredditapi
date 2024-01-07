@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Kreait\Firebase\Contract\Database;
+use Toastr;
+
 
 
 class contactController extends Controller
@@ -16,27 +18,31 @@ class contactController extends Controller
 
     public function index(){
         $contacts=$this->database->getReference($this->tablename)->getValue();
+        //return $contacts;
+
         return view('contacts',compact('contacts'));
 
     }
 
+    public function add(){
+        return view('add-contact');
+    }
+
     public function store(Request $request){
         $postData=[
-            'name'=>'mohamed',
-            'age'=>26
+            'name'=>$request->name,
+            'age'=>$request->age
         ];
 
         $postref=$this->database->getReference($this->tablename)->push($postData);
 
         if($postref){
-            return response()->json([
-                'status' => 'added'
-            ]);
+            Toastr::success('Contact Addedd Successfully!');
+            return redirect()->route('contacts');
         }
         else{
-            return response()->json([
-                'status' => 'not added'
-            ]);
+            Toastr::error('Contact Failed!');
+            return redirect()->route('contacts');
         }
     }
 }

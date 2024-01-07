@@ -9,6 +9,8 @@
         <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
         <link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet">
 
+        <!-- Modify these lines to include the package directly from node_modules -->
+        <link rel="stylesheet" href="{{ asset('css/toastr.css') }}">
 
         <style>
             body {
@@ -99,7 +101,33 @@
         </footer>
         <!-- Footer -->
 
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
         <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
+        <!-- Add these lines to your Blade layout -->
+        <script src="{{ asset('js/toastr.js') }}"></script>
+        {!! Toastr::message() !!}
+
+        <script>
+    $(document).ready(function() {
+        toastr.options = {
+  "closeButton": false,
+  "debug": false,
+  "newestOnTop": false,
+  "progressBar": false,
+  "positionClass": "toast-bottom-left",
+  "preventDuplicates": false,
+  "onclick": null,
+  "showDuration": "300",
+  "hideDuration": "1000",
+  "timeOut": "5000",
+  "extendedTimeOut": "1000",
+  "showEasing": "swing",
+  "hideEasing": "linear",
+  "showMethod": "fadeIn",
+  "hideMethod": "fadeOut"
+}
+    });
+</script>
     </body>
 </html>

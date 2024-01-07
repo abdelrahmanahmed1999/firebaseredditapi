@@ -38,6 +38,8 @@
                     <th>Kind</th>
                     <th>Title</th>
                     <th>selftext</th>
+                    <th>Actions</th>
+
                 </tr>
             </thead>
 
@@ -48,6 +50,10 @@
                         <td>{{$post['kind']}}</td>
                         <td>{{$post['data']['title']}}</td>
                         <td>{{$post['data']['selftext']}}</td>
+                        <td>
+                            <button class="btn btn-success"> Edit</button>
+
+                        </td>
 
                     </tr>
                 @empty
@@ -70,6 +76,7 @@
                     <th>Kind</th>
                     <th>Title</th>
                     <th>selftext</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
 
@@ -80,6 +87,9 @@
                         <td>{{$post['kind']}}</td>
                         <td>{{$post['data']['title']}}</td>
                         <td>{{$post['data']['selftext']}}</td>
+                        <td>
+                            <button class="btn btn-success"> Edit</button>
+                        </td>
 
                     </tr>
                 @empty
@@ -90,6 +100,7 @@
 
             </tbody>
         </table>
+
     </div>
     <!--end content of new tab-->
 
@@ -101,6 +112,7 @@
                     <th>Kind</th>
                     <th>Title</th>
                     <th>selftext</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
 
@@ -111,7 +123,9 @@
                         <td>{{$post['kind']}}</td>
                         <td>{{$post['data']['title']}}</td>
                         <td>{{$post['data']['selftext']}}</td>
-
+                        <td>
+                            <button class="btn btn-success"> Edit</button>
+                        </td>
                     </tr>
                 @empty
                     <tr>
@@ -121,6 +135,7 @@
 
             </tbody>
         </table>
+
     </div>
     <!--end content of raising tab-->
 

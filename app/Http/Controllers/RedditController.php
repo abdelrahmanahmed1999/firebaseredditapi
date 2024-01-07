@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Services\RedditService;
 use Kreait\Firebase\Contract\Database;
 
+use Illuminate\Pagination\Paginator;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 
 class RedditController extends Controller
@@ -17,12 +19,14 @@ class RedditController extends Controller
     {
         $this->redditService = $redditService;
         $this->database=$database;
-        $this->tablename="contacts";
+        $this->tablename="reddits";
     }
 
-    public function getHotPosts()
+    public function getPostsController()
     {
         try {
+
+
             /*start get data from rdditeservice*/
             $hotposts = $this->redditService->getPosts('hot',3);
             $newposts = $this->redditService->getPosts('new',3);
@@ -35,10 +39,34 @@ class RedditController extends Controller
             $this->database->getReference($this->tablename)->push($raiseposts);
             /*end store data into firebase*/
 
+            // $hotposts = $this->paginatePosts($hotposts);
+            // $newposts = $this->paginatePosts($newposts);
+            // $raiseposts = $this->paginatePosts($raiseposts);
 
             return view('reddit', compact('hotposts','newposts','raiseposts'));
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
+    }
+
+
+    protected function paginatePosts($posts, $perPage = 5)
+    {
+        // Get the current page from the request
+        $currentPage = Paginator::resolveCurrentPage('page');
+
+        // Slice the array for the current page
+        $currentPageItems = array_slice($posts, ($currentPage - 1) * $perPage, $perPage);
+
+        // Create a new paginator instance only for the current page items
+        $paginatedPosts = new LengthAwarePaginator(
+            $currentPageItems,
+            count($posts),
+            $perPage,
+            $currentPage,
+            ['path' => Paginator::resolveCurrentPath()]
+        );
+
+        return $paginatedPosts;
     }
 }

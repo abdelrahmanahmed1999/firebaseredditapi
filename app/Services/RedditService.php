@@ -1,7 +1,5 @@
 <?php
 
-// App\Services\RedditService.php
-
 namespace App\Services;
 
 use GuzzleHttp\Client;
