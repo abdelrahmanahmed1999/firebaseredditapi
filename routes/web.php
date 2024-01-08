@@ -26,10 +26,14 @@ Route::get('/',function(){
     return view("welcome");
 });
 
-Route::get('/contacts',[contactController::class,"index"]);
-Route::get('/add-contacts',[contactController::class,"store"]);
+Route::get('/contacts',[contactController::class,"index"])->name('contacts');
+Route::get('/add-contacts',[contactController::class,"add"])->name('add-contact');
+Route::post('/store-contacts',[contactController::class,"store"])->name('store-contact');
+Route::get('/edit-contacts/{key}',[contactController::class,"edit"])->name('edit-contact');
+Route::post('/update-contacts',[contactController::class,"update"])->name('update-contact');
+Route::post('/delete-contacts',[contactController::class,"delete"])->name('delete-contact');
 
 
 use App\Http\Controllers\RedditController;
 
-Route::get('/get-hot-posts', [RedditController::class, 'getHotPosts']);
+Route::get('/get-posts', [RedditController::class, 'getPostsController']);
