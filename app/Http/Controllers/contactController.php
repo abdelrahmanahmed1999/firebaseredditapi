@@ -18,9 +18,9 @@ class contactController extends Controller
 
     public function index(){
         $contacts=$this->database->getReference($this->tablename)->getValue();
-        //return $contacts;
+        $totalcontact=$this->database->getReference($this->tablename)->getSnapshot()->numChildren();
 
-        return view('contacts',compact('contacts'));
+        return view('contacts',compact('contacts','totalcontact'));
 
     }
 
@@ -44,5 +44,47 @@ class contactController extends Controller
             Toastr::error('Contact Failed!');
             return redirect()->route('contacts');
         }
+    }
+
+    public function edit($key){
+        $editdata=$this->database->getReference($this->tablename)->getChild($key)->getValue();
+        if( $editdata){
+            return view('edit-contact',compact('editdata','key'));
+        }
+        else{
+            Toastr::error('Contact Not Found!');
+            return redirect()->route('contacts');
+        }
+
+    }
+
+    public function update(Request $request){
+        $postData=[
+            'name'=>$request->name,
+            'age'=>$request->age
+        ];
+
+        $postref=$this->database->getReference($this->tablename.'/'.$request->key)->update($postData);
+
+        if($postref){
+            Toastr::success('Contact Updated Successfully!');
+            return redirect()->route('contacts');
+        }
+        else{
+            Toastr::error('Contact Failed!');
+            return redirect()->route('contacts');
+        }
+    }
+
+
+    public function delete(Request $request){
+        $deletedata=  $this->database->getReference($this->tablename.'/'.$request->key)->remove();
+        if( $deletedata){
+            Toastr::success('Contact Deleted Successfully!');
+        }
+        else{
+            Toastr::error('Contact Failed!');
+        }
+
     }
 }
