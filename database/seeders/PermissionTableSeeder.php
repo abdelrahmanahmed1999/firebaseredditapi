@@ -17,6 +17,10 @@ public function run()
     'role-create',
     'role-edit',
     'role-delete',
+    'contacts',
+    'add-contacts',
+    'edit-contacts',
+    'delete-contacts',
 
     ];
     foreach ($permissions as $permission) {
