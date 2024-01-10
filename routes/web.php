@@ -1,6 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\contactController;
+use App\Http\Controllers\RedditController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\RoleController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -20,20 +25,30 @@ use Illuminate\Support\Facades\Route;
 ], function () {});
 */
 
-use App\Http\Controllers\contactController;
+
 
 Route::get('/',function(){
     return view("welcome");
 });
 
-Route::get('/contacts',[contactController::class,"index"])->name('contacts');
-Route::get('/add-contacts',[contactController::class,"add"])->name('add-contact');
-Route::post('/store-contacts',[contactController::class,"store"])->name('store-contact');
-Route::get('/edit-contacts/{key}',[contactController::class,"edit"])->name('edit-contact');
-Route::post('/update-contacts',[contactController::class,"update"])->name('update-contact');
-Route::post('/delete-contacts',[contactController::class,"delete"])->name('delete-contact');
+Route::group(['middleware' => ['auth']], function() {
+
+    Route::get('/contacts',[contactController::class,"index"])->name('contacts');
+    Route::get('/add-contacts',[contactController::class,"add"])->name('add-contact');
+    Route::post('/store-contacts',[contactController::class,"store"])->name('store-contact');
+    Route::get('/edit-contacts/{key}',[contactController::class,"edit"])->name('edit-contact');
+    Route::post('/update-contacts',[contactController::class,"update"])->name('update-contact');
+    Route::post('/delete-contacts',[contactController::class,"delete"])->name('delete-contact');
 
 
-use App\Http\Controllers\RedditController;
+    Route::resource('roles',RoleController::class);
+    Route::resource('users',UserController::class);
+});
+
+
 
 Route::get('/get-posts', [RedditController::class, 'getPostsController']);
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
