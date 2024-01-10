@@ -5,8 +5,9 @@
 
 <div class="container">
     <h3>Total Contact : {{$totalcontact}} </h3>
-    <a href="{{route('add-contact')}}" class="btn btn-primary my-3">Add Contact</a >
-
+    @can('add-contacts')
+        <a href="{{route('add-contact')}}" class="btn btn-primary my-3">Add Contact</a >
+    @endcan
     <table class="table table-bordered">
         <thead>
             <tr>
@@ -24,8 +25,12 @@
                     <td>{{$value['name']}}</td>
                     <td>{{$value['age']}}</td>
                     <td>
-                        <a href="{{route('edit-contact',$key)}}" class="btn btn-success"> Edit</a>
-                        <a onclick="deleteContact('{{ $key }}')" class="btn btn-danger"> Delete</a>
+                        @can('edit-contacts')
+                            <a href="{{route('edit-contact',$key)}}" class="btn btn-success"> Edit</a>
+                        @endcan
+                        @can('delete-contacts')
+                            <a onclick="deleteContact('{{ $key }}')" class="btn btn-danger"> Delete</a>
+                        @endcan
 
                     </td>
 
