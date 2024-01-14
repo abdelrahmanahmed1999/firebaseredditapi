@@ -39,7 +39,8 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/edit-contacts/{key}',[contactController::class,"edit"])->name('edit-contact');
     Route::post('/update-contacts',[contactController::class,"update"])->name('update-contact');
     Route::post('/delete-contacts',[contactController::class,"delete"])->name('delete-contact');
-
+    Route::get('users/export/', [UserController::class, 'export'])->name('export.users');
+    Route::get('users/import/', [UserController::class, 'import'])->name('import.users');
 
     Route::resource('roles',RoleController::class);
     Route::resource('users',UserController::class);

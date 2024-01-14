@@ -5,8 +5,12 @@
 <div class="pull-left">
 <h2>Users Management</h2>
 </div>
-<div class="pull-right">
-<a class="btn btn-success" href="{{ route('users.create') }}"> Create New User</a>
+<div class="pull-left ">
+<a class="btn btn-primary" href="{{ route('users.create') }}"> Create New User</a>
+<a class="modal-effect btn btn-sm btn-success" href="{{route('export.users')}}">
+<i class="fa fa-plus"></i>  &nbsp; Export Excel </a>
+<a class="modal-effect btn btn-sm btn-info" href="{{route('import.users')}}">
+<i class="fa fa-plus"></i>  &nbsp; import Excel </a>
 </div>
 </div>
 </div>
@@ -29,9 +33,10 @@
 <td>{{ $user->name }}</td>
 <td>{{ $user->email }}</td>
 <td>
+
 @if(!empty($user->getRoleNames()))
-@foreach($user->getRoleNames() as $v)
-<label class="badge badge-success">{{ $v }}</label>
+@foreach($user->getRoleNames() as $role)
+<label class="">{{ $role }} , </label>
 @endforeach
 @endif
 </td>
